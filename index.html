@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="./cssBox.css" rel="stylesheet" />
+</head>
+<body>
+<div class="contentContainer">
+    <div class="timeBox">
+        <p class="boxContent" id="pstTime"></p>
+        <p class="boxContent-sub" id="pstDate"></p>
+    </div>
+    <p class="label info">PST (Current)</p>
+</div>
+<div class="contentContainer">
+    <div class="timeBox">
+        <p class="boxContent" id="jstTime"></p>
+        <p class="boxContent-sub" id="jstDate"></p>
+    </div>
+    <p class="label info">JST (Tokyo)</p>
+</div>
+<div class="contentContainer">
+    <div class="timeBox">
+        <p class="boxContent" id="kstTime"></p>
+        <p class="boxContent-sub" id="kstDate"></p>
+    </div>
+    <p class="label info">KST (Seoul)</p>
+</div>
+
+<script>
+    var pstTime = document.getElementById("pstTime");
+    var pstDate = document.getElementById("pstDate");
+    var jstTime = document.getElementById("jstTime");
+    var jstDate = document.getElementById("jstDate");
+    var kstTime = document.getElementById("kstTime");
+    var kstDate = document.getElementById("kstDate");
+
+        function refreshTime(dayAndTimeElementId, dateId, timeZoneDetails) {
+            var dayAndTime = new Date().toLocaleTimeString("en-US",  {weekday: 'short', timeZone: timeZoneDetails});
+            var date = new Date().toLocaleString("en-US",  {timeZone: timeZoneDetails}).split(',')[0];
+            dayAndTimeElementId.innerHTML = dayAndTime;
+            dateId.innerHTML = date;
+        }
+
+setInterval(function(){refreshTime(pstTime, pstDate, "America/Los_Angeles")}, 1000);
+setInterval(function(){refreshTime(jstTime, jstDate, "Asia/Tokyo")}, 1000);
+setInterval(function(){refreshTime(kstTime, kstDate, "Asia/Seoul")}, 1000);
+</script>
+</body>
+</html>

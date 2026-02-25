@@ -1,0 +1,57 @@
+html {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+body {
+    background: #C5B4E3;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    vertical-align: middle;
+}
+
+.contentContainer {
+    width: 90vw;
+    height: 25vh;
+    margin-bottom:20px;
+}
+
+.timeBox {
+    border-radius: 15px;
+    background: #8c85c4;
+    padding: 20px; 
+    height: 15vh;
+}
+
+.boxContent {
+
+    font-size: 100px;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+.boxContent-sub {
+
+    font-size: 30px;
+    color: white;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+.label {
+  color: white;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 50px;
+  margin: 0;
+  display: inline-block;
+  width: 50%;
+}
+
+.info {
+    background-color: rgb(128, 182, 189);
+}
