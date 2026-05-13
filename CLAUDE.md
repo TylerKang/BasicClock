@@ -1,11 +1,11 @@
 # Claude Code
 
 ## What this is
-Multi-timezone clock app — React + Vite. Source is in `basic-clock-app/`.
+Multi-timezone clock app — React + Vite.
 
 ## Dev
 ```bash
-cd basic-clock-app && npm install && npm run dev
+npm install && npm run dev
 ```
 Runs at http://localhost:5173
 

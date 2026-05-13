@@ -15,7 +15,6 @@ A multi-timezone clock display with pastel gradients, drag-to-reorder, and an in
 ## Development
 
 ```bash
-cd basic-clock-app
 npm install
 npm run dev       # Vite dev server at http://localhost:5173
 ```
@@ -34,15 +33,14 @@ This app is also deployed as part of [devsky](https://github.com/TylerKang/devsk
 ## Project Structure
 
 ```
-basic-clock-app/
-  src/
-    App.jsx           # Main app — zone selector, drag reorder, routing
-    App.css           # All styles
-    ClockCard.jsx     # Individual timezone card component
-    TimezoneList.jsx  # Scrolling timezone list with rAF animation
-    TimezoneList.js   # IANA timezone data array
-    main.jsx          # React entry point
-    index.css         # Base reset
-  vite.config.js      # Vite + React plugin
-  index.html          # HTML shell
+src/
+  App.jsx           # Main app — zone selector, drag reorder, routing
+  App.css           # All styles
+  ClockCard.jsx     # Individual timezone card component
+  TimezoneList.jsx  # Scrolling timezone list with rAF animation
+  TimezoneList.js   # IANA timezone data array
+  main.jsx          # React entry point
+  index.css         # Base reset
+vite.config.js      # Vite + React plugin
+index.html          # HTML shell
 ```
