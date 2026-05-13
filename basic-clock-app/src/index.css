@@ -1,0 +1,199 @@
+:root{
+    --accent-text: #5b6369; /* softer gray for primary text */
+    --muted-text: #7a8086;
+    --card-radius: 14px;
+}
+
+html{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    background: linear-gradient(180deg,#fbfbff 0%, #fffaf8 100%);
+    gap:14px;
+    padding:18px 12px;
+    overflow:hidden; /* ensure background flair doesn't create page scroll */
+}
+
+.contentContainer{
+    width:100%;
+    display:flex;
+    align-items:stretch;
+    justify-content:flex-start;
+    gap:0;
+}
+
+.timeBox{
+    flex:1;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:8px;
+    min-height:110px;
+    padding:18px 22px;
+    border-radius:var(--card-radius);
+    color:var(--accent-text);
+    box-shadow: 0 6px 18px rgba(40,40,60,0.08), inset 0 1px 0 rgba(255,255,255,0.6);
+    backdrop-filter: blur(6px);
+    background-size:200% 200%;
+    overflow:hidden;
+    position:relative;
+    transition:transform .28s ease, box-shadow .28s ease;
+    animation:floatY 6s ease-in-out infinite alternate;
+}
+
+.timeBox:hover{transform:translateY(-6px); box-shadow: 0 12px 30px rgba(40,40,60,0.12);}
+
+.boxContent{
+    font-weight:600;
+    font-size:clamp(36px, 7vw, 64px);
+    margin:0;
+    color: rgba(43,43,58,0.72);
+    flex-basis:100%;
+}
+
+.boxContent-sub{
+    font-size:clamp(22px, 4.5vw, 36px);
+    margin:0;
+    color: rgba(43,43,58,0.82);
+    flex:1;
+    text-align:left;
+}
+
+.label{
+    width:auto;
+    text-align:right;
+    font-size:clamp(22px, 4.5vw, 36px);
+    color:rgba(43,43,58,0.85);
+    margin:0;
+    padding:0;
+    font-weight:600;
+    flex:1;
+}
+
+/* Pastel gradients per container */
+.timeBox-0{
+    background: linear-gradient(120deg,#EDE7FF 0%, #F7F3FF 50%);
+    animation:gradientShift1 8s ease infinite alternate;
+}
+.timeBox-1{
+    background: linear-gradient(120deg,#FFF7EC 0%, #FFFBF0 50%);
+    animation:gradientShift2 9s ease infinite alternate;
+}
+.timeBox-2{
+    background: linear-gradient(120deg,#EBFFF6 0%, #F7FFFB 50%);
+    animation:gradientShift3 10s ease infinite alternate;
+}
+
+@keyframes gradientShift1{
+    0%{background-position:0% 50%}
+    100%{background-position:100% 50%}
+}
+@keyframes gradientShift2{
+    0%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes gradientShift3{
+    0%{background-position:0% 60%}
+    100%{background-position:100% 40%}
+}
+
+@keyframes floatY{
+    0%{transform:translateY(0)}
+    100%{transform:translateY(-4px)}
+}
+
+/* Background flair: faded timezone labels */
+body::before,
+body::after{
+    content: "PST • EST • CST • MST • GMT • CET • JST • KST • AEDT";
+    position:fixed; /* fix to viewport so it doesn't affect document height */
+    left:50%;
+    transform:translateX(-50%);
+    width:120%;
+    text-align:center;
+    font-weight:700;
+    white-space:nowrap;
+    pointer-events:none;
+    z-index:0;
+    color: rgba(43,43,58,0.06);
+    mix-blend-mode:normal;
+}
+
+body::before{
+    transform:translateX(-50%) rotate(-12deg) translateY(-6%);
+    font-size:clamp(48px, 10vw, 140px);
+    top:6%;
+}
+
+body::after{
+    transform:translateX(-50%) rotate(10deg) translateY(6%);
+    font-size:clamp(40px, 12vw, 160px);
+    bottom:4%;
+    color: rgba(43,43,58,0.05);
+}
+
+/* Responsive tweaks */
+@media (max-width:720px){
+    .contentContainer{flex-direction:column; align-items:stretch}
+    .label{width:100%; padding-left:2px; font-size:15px}
+    .timeBox{min-height:120px}
+}
+
+/* Layout for left main zones + right scrolling timezone list */
+.mainLayout{
+    display:flex;
+    gap:12px;
+    width:min(1280px, 98vw);
+    align-items:flex-start;
+    z-index:2;
+}
+.leftCol{flex:1 1 50%; display:flex; flex-direction:column; gap:12px}
+.rightCol{flex:1 1 50%}
+
+.tzViewport{
+    background: rgba(255,255,255,0.7);
+    border-radius:10px;
+    box-shadow: 0 6px 18px rgba(40,40,60,0.06);
+    overflow:hidden;
+    padding:10px 8px;
+    height:100%;
+}
+.tzListInner{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+.tzItem{
+    font-size:19px;
+    color: rgba(43,43,58,0.78);
+    padding:10px 8px;
+    border-radius:6px;
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(2px);
+    font-weight:500;
+}
+
+@keyframes scrollUp{
+    0%{ transform: translateY(0); }
+    100%{ transform: translateY(-50%); }
+}
+
+@media (max-width:920px){
+    .rightCol{width:200px; flex:0 0 200px}
+}
+
+@media (max-width:720px){
+    .mainLayout{flex-direction:column}
+    .rightCol{width:100%; flex:unset}
+    .tzViewport{height:180px}
+}
