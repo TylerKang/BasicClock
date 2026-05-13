@@ -1,54 +1,48 @@
 # BasicClock
 
-A beautiful, minimal multi-timezone clock display with a soft pastel color palette and smooth animations.
-
-![BasicClock Visual](resources/visual.png)
+A multi-timezone clock display with pastel gradients, drag-to-reorder, and an infinite-scroll timezone list.
 
 ## Features
 
-- **Main Timezone Display**: Three large, prominent clock cards showing time, date, and timezone label (customize in `jsBox.js`)
-- **Scrolling Timezone List**: Live, continuously scrolling list of all timezones with real-time updates on the right side
-- **Soft Pastel Design**: Gentle color palette with gradient backgrounds for each main card
-- **Live Updates**: All times update every second
-- **Responsive Layout**: 50/50 left-right split adapts to different screen sizes
-- **Minimal Animations**: Floating card effects and smooth scroll animations
+- **Variable clock cards** — select any number of timezones (min 1) from the full IANA list
+- **Drag to reorder** — rearrange cards by dragging, order persists to localStorage
+- **Searchable timezone selector** — filter 350+ timezones, selected zones float to top
+- **Infinite scroll list** — all world timezones with live times, smooth rAF-driven scroll
+- **Pastel gradients** — 6 cycling colors with animated gradient shifts
+- **Responsive** — adapts to desktop and mobile layouts
+- **Defaults** — Seoul, Tokyo, Los Angeles pre-selected on first visit
 
-## How to Use
+## Development
 
-1. Open `index.html` directly in a web browser (no server required)
-2. The three main timezones display on the left: **PST** (Los Angeles), **JST** (Tokyo), **KST** (Seoul)
-3. All world timezones scroll continuously on the right with live times
-
-## Customization
-
-### Change the Main Three Timezones
-
-Edit the `tzString` constant in `jsBox.js`:
-
-```javascript
-const tzString = "America/Los_Angeles:PST,Asia/Tokyo:JST,Asia/Seoul:KST";
+```bash
+cd basic-clock-app
+npm install
+npm run dev       # Vite dev server at http://localhost:5173
 ```
 
-Format: `TimezoneName:Label,TimezoneName:Label,...`
+## Build
 
-Example: `"Europe/London:GMT,America/New_York:EST,Asia/Shanghai:CST"`
+```bash
+npm run build     # output in dist/
+npm run preview   # preview production build
+```
 
-### Adjust Styling
+## Deployed
 
-All CSS is in `cssBox.css`. Key variables:
-- `--accent-text`: Primary text color (default: soft gray)
-- `--card-radius`: Card border radius (default: 14px)
+This app is also deployed as part of [devsky](https://github.com/TylerKang/devsky) at the `/clock` route on Firebase Hosting.
 
-Modify font sizes, colors, animation speeds, or layout dimensions as needed.
+## Project Structure
 
-## Files
-
-- `index.html` — Main HTML structure
-- `jsBox.js` — Core JavaScript logic (layout, time updates, scrolling list)
-- `cssBox.css` — All styling, animations, and responsive design
-- `timezoneList.js` — Complete list of valid IANA timezones
-- `README.md` — This file
-
-## Browser Support
-
-Works in all modern browsers (Chrome, Firefox, Safari, Edge). Uses vanilla JavaScript with no dependencies.
+```
+basic-clock-app/
+  src/
+    App.jsx           # Main app — zone selector, drag reorder, routing
+    App.css           # All styles
+    ClockCard.jsx     # Individual timezone card component
+    TimezoneList.jsx  # Scrolling timezone list with rAF animation
+    TimezoneList.js   # IANA timezone data array
+    main.jsx          # React entry point
+    index.css         # Base reset
+  vite.config.js      # Vite + React plugin
+  index.html          # HTML shell
+```
