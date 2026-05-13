@@ -16,11 +16,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     background: linear-gradient(180deg, #fbfbff 0%, #fffaf8 100%);
-    gap: 14px;
-    padding: 18px 12px;
-    overflow: hidden; /* ensure background flair doesn't create page scroll */
+    padding: 0;
+    overflow: hidden;
 }
 
 .app {
@@ -29,7 +27,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     overflow: hidden;
 }
 
@@ -59,15 +56,7 @@ body {
     position: relative;
     transition: transform .28s ease, box-shadow .28s ease;
     animation: floatY 6s ease-in-out infinite alternate;
-    /* Conical rainbow border */
-    border: 1px solid;
-    border-image: conic-gradient(
-        from 0deg,
-        #ff0000, #ff8000, #ffff00, #80ff00, 
-        #00ff00, #00ff80, #00ffff, #0080ff,
-        #0000ff, #8000ff, #ff00ff, #ff0080,
-        #ff0000
-    ) 1;
+    border: 1px solid rgba(43, 43, 58, 0.08);
 }
 
 .timeBox:hover {
@@ -102,21 +91,14 @@ body {
     flex: 1;
 }
 
-/* Pastel gradients per container */
-.contentContainer:nth-of-type(1) .timeBox {
-    background: linear-gradient(120deg, #EDE7FF 0%, #F7F3FF 50%);
-    animation: gradientShift1 8s ease infinite alternate;
-}
-
-.contentContainer:nth-of-type(2) .timeBox {
-    background: linear-gradient(120deg, #FFF7EC 0%, #FFFBF0 50%);
-    animation: gradientShift2 9s ease infinite alternate;
-}
-
-.contentContainer:nth-of-type(3) .timeBox {
-    background: linear-gradient(120deg, #EBFFF6 0%, #F7FFFB 50%);
-    animation: gradientShift3 10s ease infinite alternate;
-}
+/* Pastel gradients per card — applied via class since drag wrappers break nth-of-type */
+/* Pastel gradients — cycles through 6 colors for any number of cards */
+.timeBox-0 { background: linear-gradient(120deg, #EDE7FF 0%, #F7F3FF 50%); animation: gradientShift1 8s ease infinite alternate; }
+.timeBox-1 { background: linear-gradient(120deg, #FFF7EC 0%, #FFFBF0 50%); animation: gradientShift2 9s ease infinite alternate; }
+.timeBox-2 { background: linear-gradient(120deg, #EBFFF6 0%, #F7FFFB 50%); animation: gradientShift3 10s ease infinite alternate; }
+.timeBox-3 { background: linear-gradient(120deg, #FFE8EF 0%, #FFF3F6 50%); animation: gradientShift1 10s ease infinite alternate; }
+.timeBox-4 { background: linear-gradient(120deg, #E8F4FF 0%, #F2F9FF 50%); animation: gradientShift2 8s ease infinite alternate; }
+.timeBox-5 { background: linear-gradient(120deg, #FFFDE7 0%, #FFFEF5 50%); animation: gradientShift3 9s ease infinite alternate; }
 
 @keyframes gradientShift1 {
     0% { background-position: 0% 50% }
@@ -192,10 +174,11 @@ body::after {
     gap: 12px;
     width: 98vw;
     max-width: 1280px;
-    align-items: center;
+    align-items: stretch;
     z-index: 2;
     flex: 1;
-    height: calc(100vh - 40px);
+    padding: 18px 12px;
+    box-sizing: border-box;
     overflow: hidden;
 }
 
@@ -203,8 +186,11 @@ body::after {
     flex: 1 1 50%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 12px;
-    overflow: hidden;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
 }
 
 .rightCol {
@@ -214,55 +200,65 @@ body::after {
 }
 
 .tzViewport {
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 10px;
-    box-shadow: 0 6px 18px rgba(40, 40, 60, 0.06);
+    background: transparent;
+    border-radius: 18px;
     overflow: hidden;
-    padding: 10px 8px;
+    padding: 0 8px;
     height: 100%;
     width: 100%;
     box-sizing: border-box;
-    /* Conical rainbow border */
-    border: 1px solid;
-    border-image: conic-gradient(
-        from 0deg,
-        #ff0000, #ff8000, #ffff00, #80ff00, 
-        #00ff00, #00ff80, #00ffff, #0080ff,
-        #0000ff, #8000ff, #ff00ff, #ff0080,
-        #ff0000
-    ) 1;
+    position: relative;
+    /* Soft border instead of rainbow (border-image breaks border-radius) */
+    border: 1px solid rgba(43, 43, 58, 0.08);
+}
+
+/* Fade edges so items dissolve in/out */
+.tzViewport::before,
+.tzViewport::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 48px;
+    z-index: 2;
+    pointer-events: none;
+}
+.tzViewport::before {
+    top: 0;
+    background: linear-gradient(to bottom, rgba(251,251,255,0.95), transparent);
+}
+.tzViewport::after {
+    bottom: 0;
+    background: linear-gradient(to top, rgba(255,250,248,0.95), transparent);
 }
 
 .tzListInner {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
     width: 100%;
-    height: 100%;
     overflow: hidden;
     position: relative;
 }
 
 .tzItem {
-    font-size: 19px;
-    color: rgba(43, 43, 58, 0.78);
-    padding: 10px 8px;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(2px);
+    font-size: 15px;
+    color: rgba(43, 43, 58, 0.65);
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.18);
     font-weight: 500;
     width: 100%;
     box-sizing: border-box;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    /* Ensure proper vertical alignment */
     display: flex;
     align-items: center;
-    height: 40px;
+    height: 36px;
     flex-shrink: 0;
-    /* Prevent text from being cut off */
     min-width: 0;
+    letter-spacing: 0.2px;
 }
 
 @keyframes scrollUp {
@@ -278,19 +274,60 @@ body::after {
 }
 
 @media (max-width: 720px) {
+    body {
+        padding: 0;
+        gap: 0;
+        height: 100dvh;
+    }
+
+    .app {
+        height: 100dvh;
+    }
+
     .mainLayout {
         flex-direction: column;
-        height: auto;
+        gap: 0;
+        width: 100vw;
+        height: 100dvh;
+        padding: 10px 8px;
+        box-sizing: border-box;
+        overflow: hidden;
     }
-    
+
+    .leftCol {
+        flex: 0 0 auto;
+        justify-content: flex-start;
+        gap: 6px;
+        padding-bottom: 8px;
+    }
+
     .rightCol {
         width: 100%;
-        flex: unset;
-        height: 180px;
+        flex: 1 1 0;
+        min-height: 0;
+        overflow: hidden;
     }
-    
+
     .tzViewport {
-        height: 180px;
+        height: 100%;
+        border-radius: 14px;
+    }
+
+    .timeBox {
+        min-height: 70px;
+        padding: 10px 14px;
+    }
+
+    .boxContent {
+        font-size: clamp(24px, 6vw, 40px);
+    }
+
+    .boxContent-sub {
+        font-size: clamp(14px, 3.5vw, 22px);
+    }
+
+    .label {
+        font-size: clamp(14px, 3.5vw, 22px);
     }
 }
 
@@ -299,9 +336,10 @@ body::after {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     width: 100%;
     max-width: 600px;
+    max-height: 90vh;
     padding: 20px;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 14px;
@@ -311,6 +349,7 @@ body::after {
     margin: 20px;
     z-index: 10;
     position: relative;
+    overflow: hidden;
 }
 
 .zone-selector h2 {
@@ -324,11 +363,30 @@ body::after {
     text-align: center;
 }
 
+.zone-search {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    font-size: 15px;
+    margin-bottom: 14px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.7);
+    box-sizing: border-box;
+}
+
+.zone-search:focus {
+    border-color: #2196f3;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.15);
+}
+
 .zone-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 10px;
     width: 100%;
+    max-height: 50vh;
+    overflow-y: auto;
     margin-bottom: 20px;
     justify-content: center;
 }
@@ -363,11 +421,13 @@ body::after {
     display: block;
 }
 
-.zone-item .label {
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 4px;
-    color: #1976d2;
+.zone-item .zone-region {
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 2px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .confirm-button {
@@ -390,6 +450,30 @@ body::after {
 .confirm-button:disabled {
     background: #ccc;
     cursor: not-allowed;
+}
+
+/* Drag-and-drop reordering */
+.drag-wrapper {
+    cursor: grab;
+    transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1),
+                opacity 0.2s ease,
+                box-shadow 0.25s ease;
+    border-radius: var(--card-radius);
+}
+
+.drag-wrapper:active {
+    cursor: grabbing;
+}
+
+.drag-wrapper.dragging {
+    opacity: 0.4;
+    transform: scale(0.97);
+}
+
+.drag-wrapper.drag-over {
+    transform: scale(1.03) translateY(-2px);
+    box-shadow: 0 4px 20px rgba(100, 120, 255, 0.2);
+    border-radius: var(--card-radius);
 }
 
 /* Edit button styles */

@@ -35,7 +35,7 @@ const ClockCard = ({ timezone, label, index }) => {
 
   return (
     <div className="contentContainer">
-      <div className={`timeBox timeBox-${index}`}>
+      <div className={`timeBox timeBox-${index % 6}`}>
         <p className="boxContent" aria-live="polite">{time}</p>
         <p className="boxContent-sub">{date}</p>
         <p className="label info">{label}</p>
