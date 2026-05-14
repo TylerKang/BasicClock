@@ -1,20 +1,24 @@
 {
   "name": "basic-clock-app",
   "version": "1.0.0",
-  "description": "A beautiful, minimal multi-timezone clock display with a soft pastel color palette and smooth animations",
-  "main": "index.js",
+  "description": "An aesthetic multi-timezone clock display with pastel colors and smooth animations",
+  "main": "electron/main.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "electron": "npm run build && electron .",
+    "dist": "npm run build && electron-builder",
+    "dist:mas": "npm run build && electron-builder --mac mas --universal"
   },
   "keywords": [
     "clock",
     "timezone",
     "react",
-    "multi-timezone"
+    "multi-timezone",
+    "aesthetic"
   ],
-  "author": "BasicClock Team",
+  "author": "DevSky",
   "license": "MIT",
   "type": "commonjs",
   "dependencies": {
@@ -23,6 +27,44 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^6.0.1",
+    "electron": "^42.0.1",
+    "electron-builder": "^26.8.1",
     "vite": "^8.0.10"
+  },
+  "build": {
+    "appId": "com.devsky.clock",
+    "productName": "Basic Clock",
+    "copyright": "Copyright © 2026 DevSky. All rights reserved.",
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": ["universal"]
+        }
+      ],
+      "icon": "assets/icon.icns",
+      "darkModeSupport": true,
+      "minimumSystemVersion": "12.0"
+    },
+    "mas": {
+      "category": "public.app-category.utilities",
+      "entitlements": "entitlements.mas.plist",
+      "entitlementsInherit": "entitlements.mas.inherit.plist",
+      "provisioningProfile": "BasicClock_AppStore.provisionprofile",
+      "target": [
+        {
+          "target": "mas",
+          "arch": ["universal"]
+        }
+      ]
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*"
+    ],
+    "directories": {
+      "output": "release"
+    }
   }
 }

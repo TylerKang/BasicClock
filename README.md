@@ -1,46 +1,68 @@
-# BasicClock
+# Basic Clock
 
-A multi-timezone clock display with pastel gradients, drag-to-reorder, and an infinite-scroll timezone list.
+An aesthetic background clock app for macOS that displays multiple timezones with a soft pastel color palette and smooth animations. Perfect for remote teams, travelers, or anyone who needs to track time across the world at a glance.
 
 ## Features
 
-- **Variable clock cards** — select any number of timezones (min 1) from the full IANA list
-- **Drag to reorder** — rearrange cards by dragging, order persists to localStorage
-- **Searchable timezone selector** — filter 350+ timezones, selected zones float to top
-- **Infinite scroll list** — all world timezones with live times, smooth rAF-driven scroll
-- **Pastel gradients** — 6 cycling colors with animated gradient shifts
-- **Responsive** — adapts to desktop and mobile layouts
-- **Defaults** — Seoul, Tokyo, Los Angeles pre-selected on first visit
+- **Multi-timezone display** — select and view as many timezones as you need
+- **Drag-to-reorder** — arrange clocks in your preferred order
+- **Pastel color palette** — six rotating pastel colors for a calm, aesthetic look
+- **Live updates** — time refreshes every second
+- **Timezone search** — find any IANA timezone instantly
+- **Persistent layout** — your selection and order saved automatically
+- **Dark mode** — follows macOS system appearance
+- **Lightweight** — no background services, no network calls
 
-## Development
+## Install
+
+### Mac App Store
+
+One-time purchase — no ads, no subscriptions, no data collection.
+
+### Direct Download
+
+Grab the latest `.dmg` from [Releases](https://github.com/TylerKang/BasicClock/releases).
+
+## Build from Source
 
 ```bash
 npm install
-npm run dev       # Vite dev server at http://localhost:5173
+npm run electron    # builds React app + opens Electron
 ```
 
-## Build
+### Package as DMG
 
 ```bash
-npm run build     # output in dist/
-npm run preview   # preview production build
+npm run dist
+# outputs: release/Basic Clock-*.dmg
 ```
 
-## Deployed
+## App Store Listing
 
-This app is also deployed as part of [devsky](https://github.com/TylerKang/devsky) at the `/clock` route on Firebase Hosting.
+**Promotional Text:**
+> A beautiful multi-timezone clock for your Mac desktop. One-time purchase — no ads, no subscriptions, no data collection.
 
-## Project Structure
+**Description:**
+> Basic Clock lets you see the time in every timezone that matters to you, all at once. Pick your timezones, drag to reorder, and enjoy a calm, pastel-colored display that updates every second.
+>
+> Built for simplicity:
+> • One-time purchase — yours forever
+> • No ads, no in-app purchases, no subscriptions
+> • No data collection — runs entirely offline
+> • No account required
+>
+> Features:
+> • Display multiple timezones simultaneously
+> • Drag-to-reorder your clocks
+> • Search all IANA timezones instantly
+> • Soft pastel color palette with six rotating colors
+> • Dark mode support
+> • Selections persist automatically
 
-```
-src/
-  App.jsx           # Main app — zone selector, drag reorder, routing
-  App.css           # All styles
-  ClockCard.jsx     # Individual timezone card component
-  TimezoneList.jsx  # Scrolling timezone list with rAF animation
-  TimezoneList.js   # IANA timezone data array
-  main.jsx          # React entry point
-  index.css         # Base reset
-vite.config.js      # Vite + React plugin
-index.html          # HTML shell
-```
+## Privacy
+
+Basic Clock collects no data. See the full [Privacy Policy](https://devsky.org/privacy/clock).
+
+## License
+
+MIT

@@ -21,6 +21,24 @@ body {
     overflow: hidden;
 }
 
+/* Electron: draggable title bar region */
+.drag-bar {
+    -webkit-app-region: drag;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 38px;
+    z-index: 1000;
+}
+
+/* Prevent buttons/inputs inside the drag region from being undraggable */
+.drag-bar ~ .app button,
+.drag-bar ~ .app input,
+.drag-bar ~ .app .edit-button {
+    -webkit-app-region: no-drag;
+}
+
 .app {
     width: 100%;
     height: 100vh;
@@ -381,29 +399,27 @@ body::after {
 }
 
 .zone-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
     width: 100%;
     max-height: 50vh;
     overflow-y: auto;
     margin-bottom: 20px;
-    justify-content: center;
 }
 
 .zone-item {
-    padding: 12px;
+    padding: 10px 14px;
     background: rgba(255, 255, 255, 0.7);
     border-radius: 8px;
     cursor: pointer;
-    text-align: center;
     transition: all 0.2s ease;
     border: 1px solid rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    min-height: 60px;
+    justify-content: space-between;
+    min-height: 40px;
 }
 
 .zone-item:hover {
@@ -421,11 +437,34 @@ body::after {
     display: block;
 }
 
+.zone-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.zone-item .zone-meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+    margin-left: 12px;
+}
+
+.zone-item .zone-abbr {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6a7b8b;
+    letter-spacing: 0.3px;
+}
+
 .zone-item .zone-region {
     font-size: 11px;
     font-weight: 500;
-    margin-top: 2px;
-    color: #888;
+    color: #aaa;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }

@@ -10,6 +10,58 @@ const tzLabel = (tz) => {
   return parts[parts.length - 1].replace(/_/g, ' ')
 }
 
+/** Common timezone abbreviation overrides for well-known zones. */
+const TZ_ABBR_MAP = {
+  'Asia/Seoul': 'KST', 'Asia/Tokyo': 'JST', 'Asia/Shanghai': 'CST',
+  'Asia/Hong_Kong': 'HKT', 'Asia/Taipei': 'CST', 'Asia/Singapore': 'SGT',
+  'Asia/Kolkata': 'IST', 'Asia/Calcutta': 'IST', 'Asia/Dubai': 'GST',
+  'Asia/Bangkok': 'ICT', 'Asia/Ho_Chi_Minh': 'ICT', 'Asia/Jakarta': 'WIB',
+  'Asia/Manila': 'PHT', 'Asia/Karachi': 'PKT', 'Asia/Dhaka': 'BST',
+  'Asia/Kathmandu': 'NPT', 'Asia/Colombo': 'IST', 'Asia/Riyadh': 'AST',
+  'Asia/Tehran': 'IRST', 'Asia/Kabul': 'AFT', 'Asia/Vladivostok': 'VLAT',
+  'Europe/London': 'GMT', 'Europe/Dublin': 'IST', 'Europe/Lisbon': 'WET',
+  'Europe/Paris': 'CET', 'Europe/Berlin': 'CET', 'Europe/Rome': 'CET',
+  'Europe/Madrid': 'CET', 'Europe/Amsterdam': 'CET', 'Europe/Brussels': 'CET',
+  'Europe/Vienna': 'CET', 'Europe/Zurich': 'CET', 'Europe/Stockholm': 'CET',
+  'Europe/Oslo': 'CET', 'Europe/Copenhagen': 'CET', 'Europe/Warsaw': 'CET',
+  'Europe/Prague': 'CET', 'Europe/Budapest': 'CET',
+  'Europe/Helsinki': 'EET', 'Europe/Athens': 'EET', 'Europe/Bucharest': 'EET',
+  'Europe/Istanbul': 'TRT', 'Europe/Moscow': 'MSK', 'Europe/Kiev': 'EET',
+  'Australia/Sydney': 'AEST', 'Australia/Melbourne': 'AEST',
+  'Australia/Brisbane': 'AEST', 'Australia/Perth': 'AWST',
+  'Australia/Adelaide': 'ACST', 'Australia/Darwin': 'ACST',
+  'Pacific/Auckland': 'NZST', 'Pacific/Fiji': 'FJT',
+  'Pacific/Honolulu': 'HST', 'Pacific/Guam': 'ChST',
+  'America/New_York': 'EST', 'America/Chicago': 'CST',
+  'America/Denver': 'MST', 'America/Los_Angeles': 'PST',
+  'America/Phoenix': 'MST', 'America/Anchorage': 'AKST',
+  'America/Detroit': 'EST', 'America/Indianapolis': 'EST',
+  'America/Toronto': 'EST', 'America/Vancouver': 'PST',
+  'America/Winnipeg': 'CST', 'America/Edmonton': 'MST',
+  'America/Halifax': 'AST', 'America/St_Johns': 'NST',
+  'America/Sao_Paulo': 'BRT',
+  'America/Argentina/Buenos_Aires': 'ART', 'America/Bogota': 'COT',
+  'America/Lima': 'PET', 'America/Santiago': 'CLT',
+  'America/Mexico_City': 'CST', 'America/Havana': 'CST',
+  'Africa/Cairo': 'EET', 'Africa/Lagos': 'WAT', 'Africa/Nairobi': 'EAT',
+  'Africa/Johannesburg': 'SAST', 'Africa/Casablanca': 'WET',
+}
+
+/** Get timezone abbreviation — uses known map first, falls back to Intl API. */
+const tzAbbr = (tz) => {
+  if (TZ_ABBR_MAP[tz]) return TZ_ABBR_MAP[tz]
+  try {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz,
+      timeZoneName: 'short',
+    }).formatToParts(new Date())
+    const tzPart = parts.find(p => p.type === 'timeZoneName')
+    return tzPart ? tzPart.value : ''
+  } catch {
+    return ''
+  }
+}
+
 const FEATURED = ['Asia/Seoul', 'Asia/Tokyo', 'America/Los_Angeles']
 const DEFAULT_SELECTION = FEATURED.map(tz => ({ tz, label: tzLabel(tz) }))
 
@@ -21,7 +73,10 @@ const ZoneSelector = ({ onConfirm, initialSelection = [], allZones = [] }) => {
 
   const selectedTzSet = new Set(selectedZones.map(z => z.tz))
   const base = search
-    ? allZones.filter(tz => tz.toLowerCase().includes(search.toLowerCase()))
+    ? allZones.filter(tz => {
+        const q = search.toLowerCase().replace(/ /g, '_')
+        return tz.toLowerCase().includes(q) || tzAbbr(tz).toLowerCase().includes(search.toLowerCase())
+      })
     : [
         ...FEATURED.filter(tz => allZones.includes(tz)),
         ...allZones.filter(tz => !FEATURED.includes(tz)),
@@ -65,7 +120,10 @@ const ZoneSelector = ({ onConfirm, initialSelection = [], allZones = [] }) => {
             onClick={() => handleZoneToggle(tz)}
           >
             <span className="zone-label">{tzLabel(tz)}</span>
-            <span className="zone-region">{tz.split('/')[0]}</span>
+            <span className="zone-meta">
+              <span className="zone-abbr">{tzAbbr(tz)}</span>
+              <span className="zone-region">{tz.split('/')[0]}</span>
+            </span>
           </div>
         ))}
       </div>
@@ -138,6 +196,8 @@ const BasicClockApp = () => {
   }
 
   return (
+    <>
+    <div className="drag-bar" />
     <div className="app">
       {showZoneSelector ? (
         <ZoneSelector
@@ -174,6 +234,7 @@ const BasicClockApp = () => {
         </>
       )}
     </div>
+    </>
   )
 }
 
