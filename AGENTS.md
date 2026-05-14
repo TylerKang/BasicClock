@@ -36,9 +36,9 @@ npm run dist:mas
 | `src/index.css` | Base reset only |
 | `electron/main.js` | Electron main process — window, menu, lifecycle |
 | `vite.config.js` | Vite + React plugin, `base: './'` for Electron |
-| `entitlements.mas.plist` | App Sandbox entitlement for MAS |
-| `entitlements.mas.inherit.plist` | Inherited entitlements for child processes |
-| `icon-src.png` | Source icon (center-crop to square → scale to 1024 → iconutil) |
+| `build/entitlements.mas.plist` | App Sandbox entitlement for MAS |
+| `build/entitlements.mas.inherit.plist` | Inherited entitlements for child processes |
+| `assets/icon-src.png` | Source icon (center-crop to square → scale to 1024 → iconutil) |
 | `assets/icon.icns` | Generated macOS icon |
 
 ## Features
