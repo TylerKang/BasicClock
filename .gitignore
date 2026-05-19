@@ -3,3 +3,21 @@ dist/
 release/
 .DS_Store
 *.provisionprofile
+
+# Certificates, keys, and provisioning profiles
+*.mobileprovision
+*.p12
+*.p8
+*.pem
+*.key
+*.keystore
+*.jks
+*.pfx
+*.cer
+*.cert
+
+# Environment secrets
+.env
+.env.local
+.env*.local
+!.env.example
