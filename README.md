@@ -1,4 +1,4 @@
-# Basic Clock
+# Background Digital Clock
 
 An aesthetic background clock app for macOS that displays multiple timezones with a soft pastel color palette and smooth animations. Perfect for remote teams, travelers, or anyone who needs to track time across the world at a glance.
 
@@ -34,7 +34,7 @@ npm run electron    # builds React app + opens Electron
 
 ```bash
 npm run dist
-# outputs: release/Basic Clock-*.dmg
+# outputs: release/Background Digital Clock-*.dmg
 ```
 
 ## App Store Listing
@@ -43,7 +43,7 @@ npm run dist
 > A beautiful multi-timezone clock for your Mac desktop. One-time purchase — no ads, no subscriptions, no data collection.
 
 **Description:**
-> Basic Clock lets you see the time in every timezone that matters to you, all at once. Pick your timezones, drag to reorder, and enjoy a calm, pastel-colored display that updates every second.
+> Background Digital Clock lets you see the time in every timezone that matters to you, all at once. Pick your timezones, drag to reorder, and enjoy a calm, pastel-colored display that updates every second.
 >
 > Built for simplicity:
 > • One-time purchase — yours forever
@@ -61,7 +61,7 @@ npm run dist
 
 ## Privacy
 
-Basic Clock collects no data. See the full [Privacy Policy](https://devsky.org/privacy/clock).
+Background Digital Clock collects no data. See the full [Privacy Policy](https://devsky.org/privacy/clock).
 
 ## License
 

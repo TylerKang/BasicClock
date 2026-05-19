@@ -1,6 +1,6 @@
 # BasicClock — Agent Harness
 
-Aesthetic multi-timezone clock app — React + Vite, packaged as Electron desktop app for macOS.
+Aesthetic multi-timezone clock app — React + Vite, packaged as Electron desktop app for macOS. **Displayed name: "Background Digital Clock"** (matches App Store Connect listing). The folder, repo, and internal identifiers stay `BasicClock` / `basic-clock-app` / `com.devsky.clock`.
 
 ## Dev
 
@@ -14,14 +14,14 @@ npm run electron              # builds + opens Electron app
 ### Direct distribution (DMG)
 ```bash
 npm run dist
-# outputs: release/Basic Clock-*.dmg
+# outputs: release/Background Digital Clock-*.dmg
 ```
 
 ### App Store (MAS)
 ```bash
 # requires Apple Distribution cert + provisioning profile
 npm run dist:mas
-# outputs: release/Basic Clock-*-universal.pkg (arm64 + x64)
+# outputs: release/Background Digital Clock-*-universal.pkg (arm64 + x64)
 ```
 
 ## Structure
@@ -57,8 +57,8 @@ npm run dist:mas
 
 ## App Store Config
 
-- **Bundle ID**: `com.devsky.clock`
-- **App name**: Basic Clock
+- **Bundle ID**: `com.devsky.clock` (immutable — Apple warns never to change)
+- **App name (ASC + on-disk)**: Background Digital Clock
 - **Subtitle**: World time, beautifully simple
 - **Category**: Utilities
 - **Min macOS**: 12.0
@@ -108,3 +108,4 @@ Bump both in `package.json`:
 - **Zone selector layout**: Single-column list (not grid). Grid caused long names to wrap badly.
 - **Universal build**: `--universal` flag in `dist:mas` script. Produces ~2x larger pkg but runs on both Apple Silicon and Intel.
 - **Provisioning profile**: Must match bundle ID `com.devsky.clock`. File: `BasicClock_AppStore.provisionprofile` (gitignored).
+- **App name must match ASC**: Apple guideline 2.3.8 — the name in App Store Connect must match the installed app's CFBundleName / CFBundleDisplayName. This is driven by `productName` in `package.json` (electron-builder reads it). If the ASC listing name changes, update `productName` *and* `index.html` `<title>`. Bundle ID and folder/repo names stay the same — only the user-facing display string changes.

@@ -1,6 +1,6 @@
 {
   "name": "basic-clock-app",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An aesthetic multi-timezone clock display with pastel colors and smooth animations",
   "main": "electron/main.js",
   "scripts": {
@@ -33,7 +33,7 @@
   },
   "build": {
     "appId": "com.devsky.clock",
-    "productName": "Basic Clock",
+    "productName": "Background Digital Clock",
     "copyright": "Copyright © 2026 DevSky. All rights reserved.",
     "mac": {
       "category": "public.app-category.utilities",
