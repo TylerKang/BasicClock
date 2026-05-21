@@ -108,4 +108,8 @@ Bump both in `package.json`:
 - **Zone selector layout**: Single-column list (not grid). Grid caused long names to wrap badly.
 - **Universal build**: `--universal` flag in `dist:mas` script. Produces ~2x larger pkg but runs on both Apple Silicon and Intel.
 - **Provisioning profile**: Must match bundle ID `com.devsky.clock`. File: `BasicClock_AppStore.provisionprofile` (gitignored).
-- **App name must match ASC**: Apple guideline 2.3.8 — the name in App Store Connect must match the installed app's CFBundleName / CFBundleDisplayName. This is driven by `productName` in `package.json` (electron-builder reads it). If the ASC listing name changes, update `productName` *and* `index.html` `<title>`. Bundle ID and folder/repo names stay the same — only the user-facing display string changes.
+- **App name must match ASC (4 surfaces)**: Apple guideline 2.3.8 — the name in App Store Connect must match the installed app, the launched app, *and* the macOS application menu (About / Hide / Quit / Help <name>). Four separate surfaces, two separate config knobs:
+  - **CFBundleName / CFBundleDisplayName / CFBundleExecutable** (Finder, Dock, launched name) — driven by `build.productName` in `package.json` (electron-builder reads this).
+  - **macOS application menu** (About / Quit / Help) — driven by Electron's `app.name` at runtime, which reads **top-level** `productName` from the bundled `package.json`. **MUST be set at the top level of `package.json`, not just inside `build:`.** Setting only `build.productName` fixes the first three but leaves the menu showing the old name → Apple round-2 rejection.
+  - Also update `index.html` `<title>` for the window title.
+  - Bundle ID and folder/repo names stay the same — only the user-facing display string changes.

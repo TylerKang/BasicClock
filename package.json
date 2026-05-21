@@ -1,6 +1,7 @@
 {
   "name": "basic-clock-app",
-  "version": "1.0.1",
+  "productName": "Background Digital Clock",
+  "version": "1.0.2",
   "description": "An aesthetic multi-timezone clock display with pastel colors and smooth animations",
   "main": "electron/main.js",
   "scripts": {
